@@ -1,12 +1,16 @@
 const mymodule = require("./mymodule.js");
-const data = process.argv[2];
-const filter = process.argv[3];
+var directory = process.argv[2];
+var fileExt = process.argv[3];
 
-mymodule(data, filter, function(err, list) {
-  if (err) {
-    return console.error("There was an error:", err);
+mymodule(directory, fileExt)
+
+fs.readdir(directory, (err, data) => {
+  if (err) throw err;
+
+  for (var i = 0; i < data.length; i++) {
+    if (path.extname(data[i]) === "." + fileExt) {
+      console.log(data[i]);
+    }
   }
-  list.forEach(function(file) {
-    console.log(file);
-  });
 });
+
